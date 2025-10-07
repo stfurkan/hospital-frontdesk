@@ -88,7 +88,7 @@ export async function getDoctorAvailability(doctorId: number) {
 
     // If no availability is set, return default (Monday-Friday, 9am-5pm, available)
     if (availability.length === 0) {
-      return Array.from({ length: 5 }, (_, i) => ({
+      const defaultAvailability = Array.from({ length: 5 }, (_, i) => ({
         id: 0,
         doctorId,
         dayOfWeek: i + 1, // Monday = 1, Friday = 5
@@ -98,12 +98,13 @@ export async function getDoctorAvailability(doctorId: number) {
         createdAt: new Date(),
         updatedAt: new Date()
       }));
+      return { availability: defaultAvailability };
     }
 
-    return availability;
+    return { availability };
   } catch (error) {
     console.error('Get doctor availability error:', error);
-    return [];
+    return { availability: [] };
   }
 }
 
@@ -138,4 +139,3 @@ export async function initializeDefaultAvailability(doctorId: number) {
     return { error: 'Varsayılan müsaitlik oluşturulurken bir hata oluştu' };
   }
 }
-

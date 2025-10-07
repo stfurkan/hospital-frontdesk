@@ -73,7 +73,8 @@ export function CreateAppointmentDialog({
 
     setLoadingTimes(true);
     try {
-      const availability = await getDoctorAvailability(parseInt(doctorId));
+      const result = await getDoctorAvailability(parseInt(doctorId));
+      const availability = 'availability' in result ? result.availability : [];
       const selectedDate = new Date(date);
       const dayOfWeek = selectedDate.getDay();
 
